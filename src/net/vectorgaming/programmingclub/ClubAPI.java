@@ -1,17 +1,12 @@
 package net.vectorgaming.programmingclub;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 /**
  *
  * @author Kenny
  */
 public class ClubAPI 
 {
-    private static int[] ids = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-    private static HashMap<Integer, ArrayList<Integer>> idMap = new HashMap<>();
-    
+    private static int[] ids = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};    
     /**
      *
      * @return The list of Ids
@@ -67,15 +62,5 @@ public class ClubAPI
             counter++;
         }
         return false;
-    }
-    
-    public static void setupIds()
-    {
-        for(int i = 1; i < 10; i++)
-        {
-            ArrayList<Integer> list = new ArrayList<>();
-            list.add(i);
-            idMap.put(i, list);
-        }
     }
 }
