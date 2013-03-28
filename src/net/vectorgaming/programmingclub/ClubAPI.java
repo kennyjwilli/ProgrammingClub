@@ -1,5 +1,8 @@
 package net.vectorgaming.programmingclub;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  *
  * @author Kenny
@@ -7,6 +10,7 @@ package net.vectorgaming.programmingclub;
 public class ClubAPI 
 {
     private static int[] ids = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    private static HashMap<Integer, ArrayList<Integer>> idMap = new HashMap<>();
     
     /**
      *
@@ -44,10 +48,34 @@ public class ClubAPI
      */
     public static boolean connected(int point1, int point2)
     {
-        if(ids[point1] == point2)
+        boolean value = true;
+        int counter = 0;
+        int i = point1;
+        while(value)
         {
-            return true;
+            i = ids[i];
+            if(i == point2)
+            {
+                value = false;
+                return true;
+            }
+            if(counter > 10)
+            {
+                value = false;
+                return false;
+            }
+            counter++;
         }
         return false;
+    }
+    
+    public static void setupIds()
+    {
+        for(int i = 1; i < 10; i++)
+        {
+            ArrayList<Integer> list = new ArrayList<>();
+            list.add(i);
+            idMap.put(i, list);
+        }
     }
 }
