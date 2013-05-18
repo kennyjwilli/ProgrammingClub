@@ -1,5 +1,8 @@
 package net.vectorgaming.programmingclub;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+
 /**
  *
  * @author Kenny
@@ -52,5 +55,40 @@ public class CalcAPI
             fn = CalcAPI.derivativeOf(fn);
         }
         return fn;
+    }
+    
+    /**
+     * Parses an input string and returns a function.
+     * @param s Any string 
+     * @return Function
+     */
+    public static Function parseStringToFunction(final String s)
+    {
+        try
+        {
+            if(!s.contains("x"))
+            {
+                return new Function()
+                {
+                    public double evaluate(double x)
+                    {
+                        return Double.parseDouble(s);
+                    }
+                };
+            }
+        }catch(Exception e)
+        {
+            return null;
+        }
+        ScriptEngineManager manager = new ScriptEngineManager();
+        ScriptEngine se = manager.getEngineByName("JavaScript");
+        return new Function()
+        {
+            public double evaluate(double x)
+            {
+                String fnc = s;
+                
+            }
+        };
     }
 }

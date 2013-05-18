@@ -4,7 +4,7 @@ package net.vectorgaming.programmingclub;
  *
  * @author Kenny
  */
-public class ClubAPI 
+public class UnionFinder 
 {
     private static int[] ids = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};    
     /**
@@ -22,7 +22,7 @@ public class ClubAPI
      */
     public static void setIds(int[] list)
     {
-        ClubAPI.ids = list;
+        UnionFinder.ids = list;
     }
     
     /**
