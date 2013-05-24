@@ -8,7 +8,10 @@ import javax.script.ScriptEngineManager;
  * @author Kenny
  */
 
-interface Function { public double evaluate(double x);}
+interface Function 
+{ 
+    public double evaluate(double x);
+}
 
 public class CalcAPI 
 {
@@ -62,7 +65,7 @@ public class CalcAPI
      * @param s Any string 
      * @return Function
      */
-    public static Function parseStringToFunction(final String s)
+    /*public static Function parseStringToFunction(final String s)
     {
         try
         {
@@ -86,9 +89,9 @@ public class CalcAPI
         {
             public double evaluate(double x)
             {
-                String fnc = s;
-                
+                String[] split = s.split("x");
+                se.
             }
         };
-    }
+    }*/
 }

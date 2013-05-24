@@ -67,22 +67,28 @@ public class CalcGUI extends JFrame
         JPanel eqPanel = new JPanel(new FlowLayout());
         JPanel buttons = new JPanel(new FlowLayout());
         JPanel integralLimits = new JPanel(new FlowLayout());
+        JPanel answerPanel = new JPanel(new FlowLayout());
         midPanel = new JPanel(new FlowLayout());
         
         desc = new JLabel("Eaily take the derivative or integral of a function inaccurately!");
         eqDesc = new JLabel("Equation:");
         at = new JLabel("at");
         from = new JLabel("From:");
+        from.setVisible(false);
         to = new JLabel("to");
+        to.setVisible(false);
         calc = new JButton("<html><u>Calculate!</html>");
         calc.addActionListener(new ButtonHandler());
         equation = new JTextField(20);
         atField = new JTextField(3);
         integralBot = new JTextField(3);
+        integralBot.setVisible(false);
         integralTop = new JTextField(3);
+        integralTop.setVisible(false);
         derivative = new JRadioButton("Derivative");
         derivative.setSelected(true);
         integral = new JRadioButton("Integral");
+        answer = new JLabel("");
         ButtonGroup group = new ButtonGroup();
         group.add(derivative);
         group.add(integral);
@@ -126,11 +132,13 @@ public class CalcGUI extends JFrame
         integralLimits.add(integralBot);
         integralLimits.add(to);
         integralLimits.add(integralTop);
+        answerPanel.add(answer);
         
         //Add all necessary panels to the center panel
         midPanel.add(buttons);
         midPanel.add(eqPanel);
         midPanel.add(integralLimits);
+        midPanel.add(answerPanel);
         
         //Add all to borderlayout
         panel.add(midPanel, BorderLayout.CENTER);
@@ -147,7 +155,28 @@ public class CalcGUI extends JFrame
         {
             if(derivative.isSelected())
             {
-                
+                String input = equation.getText();
+                if(input.isEmpty())
+                {
+                    answer.setText("You must enter an equation silly!");
+                    return;
+                }
+                if(at.getText().isEmpty())
+                {
+                    answer.setText("What about the point to integrate at??");
+                    return;
+                }
+                String[] split = input.split("x");
+                FunctionHandler fnHandler = new FunctionHandler(split);
+                try
+                {
+                    double atPt = Double.parseDouble(atField.getText());
+                    double output = fnHandler.deriveAt(atPt);
+                    answer.setText(output+"");
+                }catch(Exception e)
+                {
+                    answer.setText("Enter a valid number for the point of integration!");
+                }
             }else
             {
                 
