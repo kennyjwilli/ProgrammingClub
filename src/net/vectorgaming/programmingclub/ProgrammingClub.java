@@ -2,9 +2,7 @@ package net.vectorgaming.programmingclub;
 
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Toolkit;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -30,7 +28,7 @@ public class ProgrammingClub extends JFrame
 //        }
         
         CalcGUI gui = new CalcGUI();
-        gui.setSize(360, 250);
+        gui.setSize(400, 250);
         gui.setLocationRelativeTo(null);
         gui.setResizable(false);
         gui.setVisible(true);

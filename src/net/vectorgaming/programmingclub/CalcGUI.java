@@ -39,26 +39,6 @@ public class CalcGUI extends JFrame
         super("Calculusalator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.add(createContentPane());
-        
-        /*JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension(350, 250));
-        setLayout(new FlowLayout());
-        
-        item1 = new JLabel("<html>Enter the function below. Check the derivative or integral box and hit calculate!</html>");
-        item1.setHorizontalAlignment((int)JFrame.LEFT_ALIGNMENT);
-        item1.setHorizontalTextPosition((int)LEFT_ALIGNMENT);
-        item1.setBounds(0, 0, WIDTH, WIDTH);
-        
-        calc = new JButton("<html><u>Calculate!</html>");
-        
-        equation = new JTextField(20);
-        
-        add(item1);
-        add(equation);
-        add(calc);
-        
-        ButtonHandler handler = new ButtonHandler();
-        calc.addActionListener(handler);*/
     }
     
     private Container createContentPane()
@@ -70,7 +50,7 @@ public class CalcGUI extends JFrame
         JPanel answerPanel = new JPanel(new FlowLayout());
         midPanel = new JPanel(new FlowLayout());
         
-        desc = new JLabel("Eaily take the derivative or integral of a function inaccurately!");
+        desc = new JLabel("Take the derivative or integral of any polynomial!");
         eqDesc = new JLabel("Equation:");
         at = new JLabel("at");
         from = new JLabel("From:");
@@ -153,9 +133,9 @@ public class CalcGUI extends JFrame
         @Override
         public void actionPerformed(ActionEvent event)
         {
+            String input = equation.getText();
             if(derivative.isSelected())
             {
-                String input = equation.getText();
                 if(input.isEmpty())
                 {
                     answer.setText("You must enter an equation silly!");
@@ -163,7 +143,7 @@ public class CalcGUI extends JFrame
                 }
                 if(at.getText().isEmpty())
                 {
-                    answer.setText("What about the point to integrate at??");
+                    answer.setText("What about the point to derive at??");
                     return;
                 }
                 String[] split = input.split("x");
@@ -171,15 +151,26 @@ public class CalcGUI extends JFrame
                 try
                 {
                     double atPt = Double.parseDouble(atField.getText());
-                    double output = fnHandler.deriveAt(atPt);
+                    String output = fnHandler.deriveAt(atPt);
+                    answer.setText(output+"");
+                }catch(Exception e)
+                {
+                    answer.setText("Enter a valid number for the point to derive at!");
+                }
+            }else
+            {
+                String[] split = input.split("x");
+                FunctionHandler fh = new FunctionHandler(split);
+                try
+                {
+                    double lowerLimit = Double.parseDouble(integralBot.getText());
+                    double upperLimit = Double.parseDouble(integralTop.getText());
+                    String output = fh.integrate(lowerLimit, upperLimit);
                     answer.setText(output+"");
                 }catch(Exception e)
                 {
                     answer.setText("Enter a valid number for the point of integration!");
                 }
-            }else
-            {
-                
             }
         }
     }

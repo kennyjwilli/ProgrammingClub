@@ -1,6 +1,9 @@
 
 package net.vectorgaming.programmingclub;
 
+import de.congrace.exp4j.Calculable;
+import de.congrace.exp4j.ExpressionBuilder;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -25,8 +28,25 @@ public class FunctionHandler
     
     public ArrayList<String> getFunctionComponents() {return fn;}
     
-    public double deriveAt(double y)
+    public double evaulateAt(double x)
     {
+        String fnStr = "";
+        for(String s : fn)
+        {
+            fnStr += s;
+            fnStr += x;
+        }
+        try
+        {
+            Calculable eval = new ExpressionBuilder(fnStr)
+                    .build();
+            return eval.calculate();
+        }catch(Exception e){}
+        return 0;
+    }
+    
+    public String deriveAt(double y)
+    {        
         String first = "";
         String second = "";
         for(String s : fn)
@@ -42,11 +62,40 @@ public class FunctionHandler
         }
         try
         {
-            double evalFirst = (Double)se.eval(first);
-            double evalSec = (Double)se.eval(second);
-            return ((evalFirst - evalSec) / DELTA_X);
+            Calculable evalFirst = new ExpressionBuilder(first)
+                    .build();
+            Calculable evalSec = new ExpressionBuilder(second)
+                    .build();
+            
+            //double evalFirst = (Double)se.eval(first);
+            //double evalSec = (Double)se.eval(second);
+            DecimalFormat dm = new DecimalFormat("#.###");
+            double ans = ((evalFirst.calculate() - evalSec.calculate()) / DELTA_X);
+            return dm.format(ans);
         }catch(Exception e){}
-        return 0;
+        return "Error";
+    }
+    
+    public String integrate(double lowerLimit, double upperLimit)
+    {
+        double limitSub = (upperLimit - lowerLimit);
+        double rect = (upperLimit - lowerLimit)*200;
+        double deltaX = (upperLimit - lowerLimit) / rect;
+        double fnEval = 0;
+        
+        for(double i = lowerLimit; i < upperLimit; i += deltaX)
+        {
+            if(i == lowerLimit || i == upperLimit)
+            {
+                fnEval += this.evaulateAt(i);
+            }else
+            {
+                fnEval += 2*this.evaulateAt(i);
+            }
+        }
+        DecimalFormat dm = new DecimalFormat("#.###");
+        double output = (deltaX/2)*fnEval;
+        return dm.format(output);
     }
     
     public void addElement(String str){fn.add(str);}
